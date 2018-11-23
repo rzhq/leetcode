@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+def sort(l):
+    for i in range(len(l)):
+        if isinstance(l[i], list):
+             l[i] = sort(l[i])
+    return sorted(l)
+
 class DoTest:
 
     def __init__(self, test_func):
@@ -20,7 +26,12 @@ class DoTest:
         for k in self.test_case:
             try:
                 out = self.test_func(*k[0])
-                assert out == k[1]
+                target = k[1]
+                if isinstance(out, list):
+                    out = sort(out)
+                if isinstance(target, list):
+                    target = sort(target)
+                assert out == target
             except AssertionError:
                 self.all_succ = False
                 print('\nwrong output.')
