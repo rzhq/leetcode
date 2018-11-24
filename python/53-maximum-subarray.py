@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+class Solution:
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        for i in range(1, len(nums)):
+            if nums[i-1] > 0:
+                nums[i] += nums[i-1]
+        return max(nums)
+
+from dotest import DoTest
+DoTest(Solution().maxSubArray).input(
+    ([-2,1,-3,4,-1,2,1,-5,4],), 6,
+    ([0],), 0,
+    ([-1,-1,-2],), -1,
+    ([-1,2,-1,2,-2],), 3,
+).run()             
