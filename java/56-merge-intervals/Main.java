@@ -6,6 +6,22 @@ import java.util.*;
 class Solution {
     public int[][] merge(int[][] intervals) {
         if ( intervals.length < 2 ) return intervals;
+        Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
+        List<int[]> list = new ArrayList<>();
+        list.add(intervals[0]);
+        for ( int[] item : intervals ) {
+            int[] tail = list.get(list.size()-1);
+            if ( tail[1] >= item[0] ) {
+                tail[1] = Math.max(tail[1], item[1]);
+            } else {
+                list.add(item);
+            }
+        }
+        return list.toArray(new int[list.size()][]);
+    }
+
+    public int[][] merge2(int[][] intervals) {
+        if ( intervals.length < 2 ) return intervals;
         Arrays.sort(intervals, ( i1, i2 ) -> Integer.compare(i1[0], i2[0]));
         int i = 0, j = 1;
         while ( j < intervals.length ) {
