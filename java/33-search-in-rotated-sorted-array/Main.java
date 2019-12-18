@@ -1,7 +1,29 @@
 // start  19-12-09 15:09
 // finish 19-12-09 16:17
+
 class Solution {
     public int search(int[] nums, int target) {
+        if ( nums.length < 1 ) return -1;
+        if ( nums.length == 1 ) return nums[0] == target ? 0 : -1;
+        int l = 0, r = nums.length - 1, m, s, rm;
+        while ( l < r ) {
+            m = ( l + r ) / 2;
+            if ( nums[m] > nums[r] ) l = m + 1;
+            else r = m;
+        }
+        s = l;
+        l = 0; r = nums.length - 1;
+        while ( l <= r ) {
+            m = ( l + r ) / 2;
+            rm = ( m + s ) % nums.length;
+            if ( nums[rm] > target ) r = m - 1;
+            else if ( nums[rm] < target ) l = m + 1;
+            else return rm;
+        }
+        return -1;
+    }
+
+    public int searchDumb(int[] nums, int target) {
         if ( nums.length < 3 ) {
             if ( nums.length > 0 && nums[0] == target ) { return 0; }
             if ( nums.length > 1 && nums[1] == target ) { return 1; }
