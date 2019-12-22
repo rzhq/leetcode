@@ -13,7 +13,22 @@ import java.util.*;
  * }
  */
 class Solution {
+    int p = 0, i = 0;
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return build(preorder, inorder, null);
+    }
+
+    TreeNode build(int[] preorder, int[] inorder, Integer stopAt) {
+        if ( i >= inorder.length || ( stopAt != null && inorder[i] == stopAt ) ) return null;
+        TreeNode node = new TreeNode(preorder[p++]);
+        node.left = build(preorder, inorder, node.val);
+        i++;
+        node.right = build(preorder, inorder, stopAt);
+        return node;
+    }
+
+    public TreeNode buildTreeN2(int[] preorder, int[] inorder) {
         return build(preorder, 0, inorder, 0, inorder.length-1);
     }
     

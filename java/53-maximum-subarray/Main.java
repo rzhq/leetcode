@@ -1,7 +1,27 @@
 // start  19-12-10 11:27
 // finish 19-12-10 12:40
+
 class Solution {
     public int maxSubArray(int[] nums) {
+        int max = nums[0];
+        for ( int i = 1; i < nums.length; i++ ) {
+            nums[i] += nums[i-1] > 0 ? nums[i-1] : 0;
+            max = Math.max(max, nums[i]);
+        }
+        return max;
+    }
+
+    public int maxSubArrayN(int[] nums) {
+        int sum = nums[0];
+        int max = nums[0];
+        for ( int i = 1; i < nums.length; i++ ) {
+            sum = Math.max(sum + nums[i], nums[i]);
+            max = Math.max(sum, max);
+        }
+        return max;
+    }
+
+    public int maxSubArrayDumb(int[] nums) {
         int max = nums[0];
         int sum = 0;
         int maxSum = nums[0];
@@ -13,7 +33,6 @@ class Solution {
             } else {
                 sum = 0;
             }
-            System.out.printf("max %d sum %d maxSum %d\n", max, sum, maxSum);
         }
         if ( max <= 0 ) { return max; }
         return maxSum > max ? maxSum : max;
