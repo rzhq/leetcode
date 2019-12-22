@@ -4,7 +4,25 @@
 import java.util.*;
 
 class Solution {
-    public int majorityElement(int[] nums) {
+    public int majorityElement(int[] A) {
+        if ( A.length < 1 ) return 0;
+        int m = A[0], c = 1;
+        for ( int i = 1; i < A.length; i++ ) {
+            if ( m == A[i] ) {
+                c++;
+            } else {
+                if ( c == 0 ) {
+                    m = A[i];
+                    c++;
+                } else {
+                    c--;
+                }
+            }
+        }
+        return m;
+    }
+
+    public int majorityElementMap(int[] nums) {
         int num = nums[0];
         int max = 0;
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -32,7 +50,7 @@ public class Main {
         check(input);
         input = new int[] {1,2,2};
         check(input);
-        input = new int[] {1,2,3,2,3,2,3,2};
+        input = new int[] {1,2,2,3,2,3,2,3,2};
         check(input);
     }
     
