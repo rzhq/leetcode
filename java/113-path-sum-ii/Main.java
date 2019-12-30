@@ -14,7 +14,38 @@ import java.util.*;
  */
 class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        return recursive(root, sum);
+        return iterative(root, sum);
+        //return recursive(root, sum);
+    }
+
+    List<List<Integer>> iterative(TreeNode root, int sum) {
+        List<List<Integer>> list = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        int pathSum = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root, prev = root;
+        while ( curr != null || !stack.empty() ) {
+            while ( curr != null ) {
+                stack.push(curr);
+                pathSum += curr.val;
+                path.add(curr.val);
+                curr = curr.left;
+            }
+            curr = stack.peek();
+            if ( curr.right != null && curr.right != prev ) {
+                curr = curr.right;
+                continue;
+            }
+            if ( curr.left == null && curr.right == null && pathSum == sum ) {
+                list.add(new ArrayList<>(path));
+            }
+            stack.pop();
+            path.remove(path.size()-1);
+            pathSum -= curr.val;
+            prev = curr;
+            curr = null;
+        }
+        return list;
     }
 
     List<List<Integer>> recursive(TreeNode root, int sum) {
